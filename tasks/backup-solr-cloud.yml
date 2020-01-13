@@ -1,7 +1,7 @@
 ---
 - name: Backup Solr Cloud collection
   uri:
-    url: http://{{ sc_backup_server }}:{{ sc_backup_port }}/solr/{{ item.name }}/replication?
+    url: '{{ sc_base_url }}/replication?'
     body: '{{ body_params | join("&") }}'
     method: POST
   run_once: yes
@@ -13,6 +13,20 @@
       - 'name={{ item.name }}-{{ ansible_date_time.epoch }}'
   register: sc_backup_collection
 
+- name: Check if backups are finished
+  uri:
+    url: '{{ sc_base_url }}/replication?'
+    body: '{{ body_params }}'
+  run_once: yes
+  loop: '{{ sc_backup_list }}'
+  vars:
+    body_params:
+      - command=details
+  register: sc_details
+
 - debug:
     var: sc_backup_collection
+
+- debug:
+    var: sc_details
     
