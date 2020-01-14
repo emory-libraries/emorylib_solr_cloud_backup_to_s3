@@ -9,4 +9,4 @@ sc_base_url: 'http://{{ sc_backup_server }}:{{ sc_backup_port }}/solr/{{ item.na
 sc_backup_params:
   - command=backup
   - 'location={{ item.location | d (sc_backup_location) }}'
-  - 'name={{ item.name }}-{{ ansible_date_time.epoch }}'
+  - 'name={{ prefix != "-" | ternary(prefix, "") }}{{ item.name }}-{{ ansible_date_time.epoch }}'
