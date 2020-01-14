@@ -5,21 +5,13 @@
     body: '{{ sc_backup_params | join("&") }}'
     method: POST
   run_once: yes
-  vars:
-    prefix: '{{ item.prefix | d () }}-'
   loop: '{{ sc_backup_list }}'
   register: sc_backup_collection
-
-- debug:
-    msg: '{{ prefix }}'
-  vars:
-    prefix: '{{ item.prefix | d () }}-'
-  loop: '{{ sc_backup_list }}'
 
 - name: Check if backups are finished
   uri:
     url: '{{ sc_base_url }}/replication?'
-    body: '{{ body_params }}'
+    body: '{{ body_params | join("&") }}'
     method: POST
   run_once: yes
   loop: '{{ sc_backup_list }}'
