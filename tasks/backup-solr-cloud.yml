@@ -17,7 +17,7 @@
   loop: '{{ sc_backup_list }}'
   retries: 10
   delay: 30
-  until: results_query[0].json.details.backup.find ("success") != -1
+  until: results_query[0]['json']['details']['backup'].find("success") != -1
   vars:
     body_params:
       - command=details
