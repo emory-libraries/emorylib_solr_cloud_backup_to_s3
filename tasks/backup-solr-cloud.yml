@@ -10,6 +10,12 @@
   loop: '{{ sc_backup_list }}'
   register: sc_backup_collection
 
+- debug:
+    msg: '{{ prefix }}'
+  vars:
+    prefix: '{{ item.prefix | d () }}-'
+  loop: '{{ sc_backup_list }}'
+
 - name: Check if backups are finished
   uri:
     url: '{{ sc_base_url }}/replication?'
