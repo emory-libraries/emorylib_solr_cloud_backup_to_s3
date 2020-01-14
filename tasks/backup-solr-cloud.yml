@@ -4,32 +4,13 @@
     url: '{{ sc_base_url }}/replication?'
     body: '{{ sc_backup_params | join("&") }}'
     method: POST
+    creates: '{{ item.location | d (sc_backup_location) }}/{{ item.name }}-{{ ansible_date_time.epoch }}'
   run_once: yes
   loop: '{{ sc_backup_list }}'
   register: sc_backup_collection
-
-- name: Check if backups are finished
-  uri:
-    url: '{{ sc_base_url }}/replication?'
-    body: '{{ body_params | join("&") }}'
-    method: POST
-  run_once: yes
-  loop: '{{ sc_backup_list }}'
-  retries: 10
-  delay: 30
-  until: results_query[0]['json']['details']['backup'].find("success") != -1
-  vars:
-    body_params:
-      - command=details
-    results_query: sc_details.results | selectattr ('item', {{ item.name }})
-    
-  register: sc_details
 
 - name: SC BACKUP COLLECTION
   debug:
     var: sc_backup_collection
 
-- name: SC DETAILS
-  debug:
-    var: sc_details
     
