@@ -14,6 +14,7 @@
   uri:
     url: '{{ sc_base_url }}/replication?'
     body: '{{ body_params }}'
+    method: POST
   run_once: yes
   loop: '{{ sc_backup_list }}'
   vars:
