@@ -18,13 +18,13 @@
     snapshot_dir_names: '{{ snapshot_dir_names | d ([]) + [ item | basename ] }}'
   loop: '{{ snapshot_paths }}'
 
-- name: Retry until no new files in the directory
+- name: Check snapshots until job has finished writing files to the directories
   find:
     paths: '{{ snapshot_paths }}'
     age: -5s
   register: find_new_files
-  retries: 40
-  delay: 5
+  retries: 100
+  delay: 3
   until: find_new_files.matched == 0
 
 - name: Create .tar.gz file from snapshot directory
@@ -42,7 +42,3 @@
   vars:
     get_trailing_slash: \/$
   loop: '{{ sc_backup_list | zip(snapshot_paths) | list }}'
-
-#- name: Display Snapshot dir names
-#  debug:
-#    var: snapshot_dir_names
