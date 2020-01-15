@@ -4,7 +4,7 @@
     url: '{{ sc_base_url }}/replication?'
     body: '{{ sc_backup_params | join("&") }}'
     method: POST
-    creates: '{{ item.location | d (sc_backup_location) }}/{{ item.name }}-{{ ansible_date_time.epoch }}'
+    creates: '{{ item.location | d (sc_backup_location) }}/snapshot.{{ item.name }}-{{ ansible_date_time.epoch }}'
   run_once: yes
   loop: '{{ sc_backup_list }}'
   register: sc_backup_collection
