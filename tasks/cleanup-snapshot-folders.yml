@@ -11,13 +11,14 @@
     file_type: directory
   register: find_snapshot_folders
 
-- debug:
-    var: find_snapshot_folders
-
-- pause:
+- name: Build list of folders to be deleted
+  set_fact:
+    folders_to_delete: '{{ find_snapshot_folders | map(attribute="files") | map(attribute="path") | reject("undefined") | list }}'
+  when: find_snapshot_folders.matched > 0
 
 - name: Cleanup snapshot directories on shared drive space
   file: 
-    path: '{{ item.location | d (sc_backup_location) }}/snapshot*'
+    path: '{{ item }}'
     state: absent
-  when: sc_backup_location_cleanup
+  loop: '{{ folders_to_delete }}'
+  when: find_snapshot_folders.matched > 0
