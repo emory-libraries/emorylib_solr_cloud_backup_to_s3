@@ -29,6 +29,17 @@
 - debug:
     var: find_new_files
 - pause:
+    minutes: 1
+- name: Retry until no new files in the directory
+  find:
+    paths: '{{ snapshot_paths }}'
+    age: -5s
+  register: find_new_files
+- debug:
+    var: find_new_files
+- pause:
+
+
 
 - name: Get stat check of folder
   stat:
