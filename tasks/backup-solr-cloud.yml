@@ -27,7 +27,7 @@
 - name: Copy tar.gz file to S3 bucket
   aws_s3:
     bucket: '{{ item.0.bucket | d (sc_backup_bucket) }}'
-    object: '{{ item.0.bucket_key | d (sc_backup_bucket_key) | regex_replace(get_trailing_slash, '') }}/{{ item.1 | basename }}.tar.gz'
+    object: '{{ item.0.bucket_key | d (sc_backup_bucket_key) | regex_replace(get_trailing_slash, "") }}/{{ item.1 | basename }}.tar.gz'
     src: '/tmp/{{ item.1 | basename }}.tar.gz'
     mode: put
   vars:
