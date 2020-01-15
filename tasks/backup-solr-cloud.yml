@@ -19,7 +19,7 @@
   loop: '{{ snapshot_paths }}'
 
 - name: Create .tar.gz file from snapshot directory
-  shell: tar -xvf {{ item }} /tmp/{{ item | basename }}.tar.gz
+  shell: tar -czvf {{ item }} /tmp/{{ item | basename }}.tar.gz
   loop: '{{ snapshot_paths }}'
 
 - name: Copy tar.gz file to S3 bucket
