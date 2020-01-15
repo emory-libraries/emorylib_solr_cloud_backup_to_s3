@@ -8,7 +8,6 @@
   find:
     paths: '{{ snapshot_dir_list }}'
     patterns: 'snapshot*'
-    use_regex: yes
     file_type: directory
   register: find_snapshot_folders
 
