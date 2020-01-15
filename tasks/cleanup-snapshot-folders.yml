@@ -1,0 +1,17 @@
+---
+- name: Find snapshot folders
+  find:
+    paths: '{{ snapshot_paths | dirname | unique }}'
+    patterns: 'snapshot*'
+  register: find_snapshot_folders
+
+- debug:
+    var: find_snapshot_folders
+
+- pause:
+
+- name: Cleanup snapshot directories on shared drive space
+  file: 
+    path: '{{ item.location | d (sc_backup_location) }}/snapshot*'
+    state: absent
+  when: sc_backup_location_cleanup
