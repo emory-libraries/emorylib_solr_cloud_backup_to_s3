@@ -20,8 +20,9 @@
 
 - name: Create .tar.gz file from snapshot directory
   archive:
-    path: '{{ item }}'
+    path: '{{ item }}/*'
     dest: '/tmp/{{ item | basename }}.tar.gz'
+    format: gz
   loop: '{{ snapshot_paths }}'
 
 - name: Copy tar.gz file to S3 bucket
