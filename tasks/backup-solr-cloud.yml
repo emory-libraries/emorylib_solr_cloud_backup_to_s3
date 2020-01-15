@@ -18,6 +18,10 @@
     snapshot_dir_names: '{{ snapshot_dir_names | d ([]) + [ item | basename ] }}'
   loop: '{{ snapshot_paths }}'
 
+- name: Pause for solr backup to be completed
+  pause:
+    minutes: 2
+    
 - name: Create .tar.gz file from snapshot directory
   archive:
     path: '{{ item }}'
