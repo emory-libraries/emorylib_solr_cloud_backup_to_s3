@@ -13,4 +13,11 @@
   debug:
     var: sc_backup_collection
 
+- name: Create list of snapshot paths
+  set_fact:
+    snapshot_paths: '{{ sc_backup_collection.results | map(attribute="invocation") | sum(start=[]) | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
+
+- name: Display snapshot paths
+  debug:
+    var: snapshot_paths
     
