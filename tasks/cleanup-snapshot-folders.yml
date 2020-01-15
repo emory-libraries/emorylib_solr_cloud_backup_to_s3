@@ -1,8 +1,9 @@
 ---
 - name: Find snapshot folders
   find:
-    paths: '{{ snapshot_paths | dirname | list | unique }}'
+    paths: '{{ item | dirname }}'
     patterns: 'snapshot*'
+  loop: '{{ snapshot_paths }}'
   register: find_snapshot_folders
 
 - debug:

@@ -13,10 +13,6 @@
   set_fact:
     snapshot_paths: '{{ sc_backup_collection.results | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
 
-- debug: 
-    msg: '{{ snapshot_paths | dirname }}'
-- pause:
-
 - name: Check snapshots until job has finished writing files to the directories
   find:
     paths: '{{ snapshot_paths }}'
