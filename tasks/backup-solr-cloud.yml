@@ -20,10 +20,12 @@
 
 - name: Pause for solr backup to be completed
   pause:
-    minutes: 2
+    minutes: 1
     
 - name: Create .tar.gz file from snapshot directory
-  shell: tar -czvfP /tmp/{{ item | basename }}.tar.gz {{ item }}
+  archive:
+    path: '{{ item }}'
+    dest: '/tmp/{{ item | basename }}.tar.gz'
   loop: '{{ snapshot_paths }}'
 
 - name: Copy tar.gz file to S3 bucket
