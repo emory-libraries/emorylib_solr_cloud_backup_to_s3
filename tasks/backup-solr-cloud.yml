@@ -18,6 +18,15 @@
     snapshot_dir_names: '{{ snapshot_dir_names | d ([]) + [ item | basename ] }}'
   loop: '{{ snapshot_paths }}'
 
+- name: Get stat check of folder
+  stat:
+    path: '{{ item }}'
+  loop: '{{ snapshot_paths }}'
+  register: stat_check
+
+- debug:
+    var: stat_check.results
+      
 - name: Pause for solr backup to be completed
   pause:
     minutes: 1
