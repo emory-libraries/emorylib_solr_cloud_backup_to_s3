@@ -1,9 +1,14 @@
 ---
+- name: Get list of snapshot dir folders
+  set_fact:
+    snapshot_dir_list: '{{ snapshot_dir_list | d ([]) + [item | dirname] }}'
+  loop: '{{ snapshot_paths }}'
+
 - name: Find snapshot folders
   find:
-    paths: '{{ item | dirname }}'
+    paths: '{{ snapshot_dir_list }}'
     patterns: 'snapshot*'
-  loop: '{{ snapshot_paths }}'
+    use_regex: yes
   register: find_snapshot_folders
 
 - debug:
