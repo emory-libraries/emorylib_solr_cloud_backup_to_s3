@@ -23,15 +23,9 @@
     paths: '{{ snapshot_paths }}'
     age: -5s
   register: find_new_files
-  #retries: 40
-  #delay: 5
-  #until: find_new_files.matched == 0
-  
-- debug:
-    var: find_new_files.matched
-
-- pause:
-
+  retries: 40
+  delay: 5
+  until: find_new_files.matched == 0
 
 - name: Create .tar.gz file from snapshot directory
   archive:
