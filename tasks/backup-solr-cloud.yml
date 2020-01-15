@@ -26,10 +26,19 @@
 
 - debug:
     var: stat_check.results
-      
+
 - name: Pause for solr backup to be completed
   pause:
     minutes: 1
+
+- name: Get stat check of folder
+  stat:
+    path: '{{ item }}'
+  loop: '{{ snapshot_paths }}'
+  register: stat_check
+
+- debug:
+    var: stat_check.results
     
 - name: Create .tar.gz file from snapshot directory
   archive:
