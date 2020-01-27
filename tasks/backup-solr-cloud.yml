@@ -13,22 +13,10 @@
   set_fact:
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
-- debug:
-    var: request_ids
-
-- name: Check request ids for completed backups
-  uri:
-    url: '{{ sc_base_url }}/collections?'
-    body: '{{ params | join("&") }}'
-    method: POST
-  vars:
-    params:
-      - action=requeststatus
-      - 'requestid={{ item }}'
-    status: '{{ backup_status | json_query("results[].json.status.state") | select("contains", "running") | list }}'
-  loop: '{{ request_ids }}'
-  register: backup_status
-  until: "'running' not in status"
+- name: Include tasks for checking if backup job has completed
+  include_tasks:
+    file: check-request-status.yml
+  until: status_list == 0
   retries: 20
   delay: 10
 
