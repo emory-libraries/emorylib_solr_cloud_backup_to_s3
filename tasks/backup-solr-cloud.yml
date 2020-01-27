@@ -13,17 +13,6 @@
   set_fact:
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
-- name: Include tasks for checking if backup job has completed
-  include_tasks:
-    file: check-request-status.yml
-  until: status_list == 0
-  retries: 20
-  delay: 10
-
-- debug:
-    var: backup_status | json_query("results[].json.status.state") | select("contains", "running") | list
-- pause:
-
 - name: Create list of snapshot paths
   set_fact:
     snapshot_paths: '{{ sc_backup_collection.results | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
