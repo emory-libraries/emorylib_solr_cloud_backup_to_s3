@@ -4,6 +4,7 @@
     url: '{{ sc_base_url }}/collections?'
     body: '{{ sc_backup_params | join("&") }}'
     method: POST
+    creates: '{{ item.location | d (sc_backup_location) }}/{{ item.name }}-{{ ansible_date_time.epoch }}'
   loop: '{{ sc_backup_list }}'
   loop_control:
     extended: yes
@@ -26,6 +27,7 @@
   find:
     paths: '{{ snapshot_paths }}'
     age: -5s
+    recurse: yes
   register: find_new_files
   retries: '{{ sc_backup_retries }}'
   delay: '{{ sc_backup_delay }}'
