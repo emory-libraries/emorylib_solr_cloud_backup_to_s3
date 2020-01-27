@@ -33,7 +33,7 @@
   delay: 10
 
 - debug:
-    var: backup_status | json_query("results[].json.status.state") | select("contains", "running") | length
+    var: backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length
 - pause:
 
 - name: Create list of snapshot paths
