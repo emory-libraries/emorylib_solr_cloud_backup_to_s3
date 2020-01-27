@@ -25,8 +25,10 @@
     params:
       - action=requeststatus
       - 'requestid={{ item }}'
+    status: '{{ backup_status | json_query("results[].json.status.state") }}'
   loop: '{{ request_ids }}'
   register: backup_status
+  until: status.find("running") == 0
 
 - debug:
     var: backup_status
