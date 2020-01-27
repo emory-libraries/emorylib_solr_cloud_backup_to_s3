@@ -13,6 +13,11 @@
   set_fact:
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
+- debug:
+    var: sc_backup_collection
+
+- pause: 
+
 - name: Create list of snapshot paths
   set_fact:
     snapshot_paths: '{{ sc_backup_collection.results | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
