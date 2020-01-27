@@ -18,6 +18,7 @@ sc_base_url: 'http://{{ sc_backup_server }}:{{ sc_backup_port }}/solr/admin'
 
 sc_backup_params:
   - action=BACKUP
+  - 'collection={{ item.name }}'
   - 'location={{ item.location | d (sc_backup_location) }}'
   - 'name={{ item.name }}-{{ ansible_date_time.epoch }}'
   - 'async={{ ansible_date_time.epoch }}-{{ ansible_loop.index }}'
