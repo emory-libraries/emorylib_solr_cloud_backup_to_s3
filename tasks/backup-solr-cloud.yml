@@ -24,7 +24,7 @@
   vars:
     params:
       - action=requeststatus
-      - requestid='{{ item }}'
+      - 'requestid={{ item }}'
   loop: '{{ request_ids }}'
   register: backup_status
 
