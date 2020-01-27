@@ -9,9 +9,27 @@
     extended: yes
   register: sc_backup_collection
 
-- debug:
-    var: sc_backup_collection
+- name: Get request IDs
+  set_fact:
+    request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
+- debug:
+    var: request_ids
+
+- name: Check request ids for completed backups
+  uri:
+    url: '{{ sc_base_url }}/collections?'
+    body: '{{ params | join("&") }}'
+    method: POST
+  vars:
+    params:
+      - action=requeststatus
+      - requestid='{{ item }}'
+  loop: '{{ request_ids }}'
+  register: backup_status
+
+- debug:
+    var: backup_status
 - pause:
 
 - name: Create list of snapshot paths
