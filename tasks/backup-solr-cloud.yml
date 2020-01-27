@@ -25,15 +25,15 @@
     params:
       - action=requeststatus
       - 'requestid={{ item }}'
-    status: '{{ backup_status | json_query("results[].json.status.state") }}'
+    #status: '{{ backup_status | json_query("results[].json.status.state") }}'
   loop: '{{ request_ids }}'
   register: backup_status
-  until: status.find("running") == 0
-  retries: 20
-  delay: 10
+  #until: status.find("running") == 0
+  #retries: 20
+  #delay: 10
 
 - debug:
-    var: backup_status
+    var: backup_status | json_query("results[].json.status.state")
 - pause:
 
 - name: Create list of snapshot paths
