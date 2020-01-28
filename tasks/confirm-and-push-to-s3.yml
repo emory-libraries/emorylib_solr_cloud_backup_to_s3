@@ -19,8 +19,8 @@
 - name: Assert that all request ids are completed
   assert:
     that: status_list == 0
-  success_msg: 'All backup jobs have been completed'
-  fail_msg: 'There was a problem with the backup job'
+    success_msg: 'All backup jobs have been completed'
+    fail_msg: 'There was a problem with the backup job'
 
 - name: Create .tar.gz file from backup directory
   archive:
