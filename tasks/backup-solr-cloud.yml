@@ -14,7 +14,7 @@
   set_fact:
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
-- name: Pause three seconds
+- name: Pause three seconds before directory check
   pause:
     seconds: 3
 
