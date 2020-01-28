@@ -14,11 +14,11 @@
 
 - name: Set status list
   set_fact:
-    status_list: '{{ backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length | int }}'
+    status_list: '{{ backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length }}'
 
 - name: Assert that all request ids are completed
   assert:
-    that: status_list == 0
+    that: status_list == '0'
     success_msg: 'All backup jobs have been completed'
     fail_msg: 'There was a problem with the backup job'
 
