@@ -14,6 +14,10 @@
   set_fact:
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
 
+- name: Pause three seconds
+  pause:
+    seconds: 3
+
 - name: Create list of backup directories
   set_fact:
     backup_dirs: '{{ sc_backup_collection.results | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
