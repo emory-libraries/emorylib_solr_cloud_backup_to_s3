@@ -26,10 +26,13 @@
     status: '{{ backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length }}'
   loop: '{{ request_ids }}'
   register: backup_status
-  until: backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length == '0'
+  until: backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length == "0"
   retries: 20
   delay: 10
 
+- debug:
+    var: backup_status | json_query("results[].json.status.state") | select("contains", "running") | list | length
+    
 - name: Pause three seconds before directory check
   pause:
 
