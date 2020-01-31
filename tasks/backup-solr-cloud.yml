@@ -15,11 +15,6 @@
     request_ids: '{{ sc_backup_collection | json_query("results[].json.requestid") }}'
     backup_dirs: '{{ sc_backup_collection.results | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
 
-- name: Wait until backup_dirs are available
-  wait_for:
-    path: '{{ item }}'
-  loop: '{{ backup_dirs }}'
-
 - name: Ensure backup directories have not been written to for at least 5 seconds
   find:
     paths: '{{ backup_dirs }}'
