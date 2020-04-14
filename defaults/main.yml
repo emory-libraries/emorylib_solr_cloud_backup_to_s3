@@ -22,3 +22,16 @@ sc_backup_params:
   - 'location={{ item.location | d (sc_backup_location) }}'
   - 'name={{ item.name }}-{{ ansible_date_time.epoch }}'
   - 'async={{ ansible_date_time.epoch }}-{{ ansible_loop.index }}'
+
+
+solr_cloud_backup_post_params:
+  - action=BACKUP
+  - 'collection={{ solr_cloud_backup.collection.name }}'
+  - 'location={{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
+  - 'async={{ ansible_date_time.epoch }}-backup'
+solr_cloud_backup_server: localhost
+solr_cloud_backup_port: 8983
+
+solr_cloud_backup_base_url: 'http://{{ solr_cloud_backup_server }}:{{ solr_cloud_backup_port }}/solr/admin'
+solr_cloud_backup_retries: 100
+solr_cloud_backup_delay: 10

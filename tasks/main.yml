@@ -4,8 +4,6 @@
 - name: Include tasks for backup solr cloud
   include_tasks:
     file: backup-solr-cloud.yml
-    apply:
-      become: yes
 
 - name: Include tasks for confirm and push to s3
   include_tasks:
