@@ -2,6 +2,8 @@
 - name: Ensure that the tmp directory exists
   file:
     path: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
+    owner: '{{ solr_cloud_backup_owner }}'
+    group: '{{ solr_cloud_backup_group }}'
     state: directory
 
 - name: Call Solr API to start backup process
@@ -9,7 +11,7 @@
     url: '{{ solr_cloud_backup_base_url }}/collections?'
     body: '{{ solr_cloud_backup_post_params | join("&") }}'
     method: POST
-    #creates: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
+    creates: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
   register: solr_cloud_backup_request_info
 
 - debug:

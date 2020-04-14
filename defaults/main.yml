@@ -23,6 +23,8 @@ sc_backup_params:
   - 'name={{ item.name }}-{{ ansible_date_time.epoch }}'
   - 'async={{ ansible_date_time.epoch }}-{{ ansible_loop.index }}'
 
+solr_cloud_backup_owner: solr
+solr_cloud_backup_group: solr
 
 solr_cloud_backup_post_params:
   - action=BACKUP
