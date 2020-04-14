@@ -1,7 +1,7 @@
 ---
 - name: Ensure that the tmp directory exists
   file:
-    path: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
+    path: '{{ solr_cloud_backup.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
     owner: '{{ solr_cloud_backup_owner }}'
     group: '{{ solr_cloud_backup_group }}'
     state: directory
@@ -16,7 +16,7 @@
 - name: Set facts from API call
   set_fact:
     request_id: '{{ solr_cloud_backup_request_info | json_query("json.requestid") }}'
-    temp_dir: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
+    temp_dir: '{{ solr_cloud_backup.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
 
 - name: Wait for temp directory to become available
   wait_for:

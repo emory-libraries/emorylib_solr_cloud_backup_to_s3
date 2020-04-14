@@ -1,0 +1,7 @@
+---
+- name: Copy backup directory to file destination
+  synchronize:
+    src: '{{ solr_cloud_backup.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
+    dest: '{{ solr_cloud_backup.dest.path }}/{{ solr_cloud_backup.collection.name }}'
+    mode: pull
+  when: solr_cloud_backup.dest.path is defined
