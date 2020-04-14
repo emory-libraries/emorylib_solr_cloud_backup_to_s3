@@ -1,7 +1,15 @@
 ---
-- name: Copy backup directory to file destination
+- name: Ensure that the destination directory exists
+  file:
+    path: '{{ solr_cloud_backup.dest.path }}/{{ solr_cloud_backup.collection.name }}'
+    owner: '{{ solr_cloud_backup_owner }}'
+    group: '{{ solr_cloud_backup_group }}'
+    state: directory
+  when: solr_cloud_backup.dest.path is defined
+
+- name: Copy temp directory to file destination
   synchronize:
-    src: '{{ solr_cloud_backup.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
+    src: '{{ temp_dir }}'
     dest: '{{ solr_cloud_backup.dest.path }}/{{ solr_cloud_backup.collection.name }}'
     mode: pull
   when: solr_cloud_backup.dest.path is defined
