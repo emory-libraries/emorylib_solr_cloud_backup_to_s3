@@ -27,7 +27,8 @@ sc_backup_params:
 solr_cloud_backup_post_params:
   - action=BACKUP
   - 'collection={{ solr_cloud_backup.collection.name }}'
-  - 'location={{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
+  - 'location={{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}'
+  - 'name={{ ansible_date_time.iso8601_micro }}'
   - 'async={{ ansible_date_time.epoch }}-backup'
 solr_cloud_backup_server: localhost
 solr_cloud_backup_port: 8983
