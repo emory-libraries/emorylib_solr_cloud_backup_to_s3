@@ -47,5 +47,3 @@
   failed_when: state == 'failed'
   retries: '{{ solr_cloud_backup_retries }}'
   delay: '{{ solr_cloud_backup_delay }}'
-
-- pause:
