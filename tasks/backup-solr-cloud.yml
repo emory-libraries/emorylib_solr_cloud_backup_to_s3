@@ -11,18 +11,12 @@
     url: '{{ solr_cloud_backup_base_url }}/collections?'
     body: '{{ solr_cloud_backup_post_params | join("&") }}'
     method: POST
-    creates: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
   register: solr_cloud_backup_request_info
-
-- debug:
-    var: solr_cloud_backup_request_info
-
-- pause:
 
 - name: Set facts from API call
   set_fact:
     request_id: '{{ solr_cloud_backup_request_info | json_query("json.requestid") }}'
-    temp_dir: '{{ solr_cloud_backup_request_info | map(attribute="invocation") | map(attribute="module_args") | map(attribute="creates") | reject("undefined") | list }}'
+    temp_dir: '{{ solr_cloud_backup.dest.tmp_path }}/{{ solr_cloud_backup.collection.name }}/{{ ansible_date_time.iso8601_micro }}'
 
 - name: Wait for temp directory to become available
   wait_for:
