@@ -43,8 +43,6 @@ solr_cloud_backup_delay: # number of seconds between each retry, you may have to
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
 ```yaml
     - hosts: solr-instance-1 # Only run against a single solr cloud instance
       vars:
