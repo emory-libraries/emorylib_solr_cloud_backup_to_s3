@@ -1,11 +1,11 @@
 ---
 # tasks file for emorylib_solr_cloud_backup_to_s3
 
-- name: Include tasks to error check input
-  include_tasks:
-    file: error-check-input.yml
-    apply:
-      run_once: yes
+#- name: Include tasks to error check input
+#  include_tasks:
+#    file: error-check-input.yml
+#    apply:
+#      run_once: yes
 
 - name: Include tasks to check tmp path
   include_tasks:
