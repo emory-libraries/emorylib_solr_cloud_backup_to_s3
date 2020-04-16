@@ -1,5 +1,7 @@
 ---
 # tasks file for emorylib_solr_cloud_backup_to_s3
+- name: Test run once
+  include_tasks: ping-test.yml
 
 - name: Include tasks to error check input
   include_tasks:
