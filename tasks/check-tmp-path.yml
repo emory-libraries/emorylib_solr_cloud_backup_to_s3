@@ -12,8 +12,11 @@
     src: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
   register: slurp_info
 
+- name: Set input variable
+  set_fact:
+    slurp_input: '{{ slurp_info["content"]["test_if_all_solrs_can_read"] | b64decode | from_yaml  }}'
 - debug:
-    var: slurp_info['content'] | b64decode | from_yaml  
+    var: slurp_input  
 
 - pause:
 
