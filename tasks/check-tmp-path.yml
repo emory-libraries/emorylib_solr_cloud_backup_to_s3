@@ -14,9 +14,9 @@
 
 - name: Set input variable
   set_fact:
-    slurp_input: '{{ slurp_info["content"]["test_if_all_solrs_can_read"] | b64decode | from_yaml  }}'
+    slurp_input: '{{ slurp_info["content"] | b64decode | from_yaml  }}'
 - debug:
-    var: slurp_input  
+    var: slurp_input["test_if_all_solrs_can_read"]  
 
 - pause:
 
