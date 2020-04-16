@@ -7,12 +7,21 @@
     group: '{{ solr_cloud_backup_group }}'
   run_once: yes
 
+- name: Slurp file
+  slurp:
+    src: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
+  register: slurp_info
+
+- debug:
+    var: slurp_info
+
+- pause:
+
 - name: Read file from all solr environments
   debug:
     msg: 'Value is {{ lookup("file", test_path ) }}'
   vars:
     test_path: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
 
-- pause:
   
   
