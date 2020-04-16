@@ -12,19 +12,9 @@
     src: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
   register: slurp_info
 
-- name: Set input variable
-  set_fact:
-    slurp_input: '{{ slurp_info["content"] | b64decode | from_yaml  }}'
-- debug:
-    var: slurp_input["test_if_all_solrs_can_read"]  
-
-- pause:
-
-- name: Read file from all solr environments
-  debug:
-    msg: 'Value is {{ lookup("file", test_path ) }}'
-  vars:
-    test_path: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
-
-  
+- name: Delete test file
+  file:
+    path: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
+    state: absent
+    run_once: yes
   
