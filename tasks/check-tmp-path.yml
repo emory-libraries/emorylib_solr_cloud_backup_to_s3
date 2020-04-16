@@ -1,0 +1,18 @@
+---
+- name: Write test file to tmp path
+  template:
+    src: tmp_path_check.j2
+    dest: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
+    owner: '{{ solr_cloud_backup_owner }}'
+    group: '{{ solr_cloud_backup_group }}'
+  run_once: yes
+
+- name: Read file from all solr environments
+  debug:
+    msg: 'Value is {{ lookup("file", test_path ) }}'
+  vars:
+    test_path: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
+
+- pause:
+  
+  
