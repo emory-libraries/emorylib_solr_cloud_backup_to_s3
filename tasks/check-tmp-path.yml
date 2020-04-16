@@ -13,8 +13,8 @@
   register: slurp_info
 
 - debug:
-    var: slurp_info['content'] | b64decode 
-    
+    var: slurp_info['content'] | b64decode | from_yaml  
+
 - pause:
 
 - name: Read file from all solr environments
