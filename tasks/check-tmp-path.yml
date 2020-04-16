@@ -16,5 +16,5 @@
   file:
     path: '{{ solr_cloud_backup.tmp_path }}/test_if_all_solrs_can_read.yml'
     state: absent
-    run_once: yes
+  run_once: yes
   
